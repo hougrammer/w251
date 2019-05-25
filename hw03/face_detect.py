@@ -1,14 +1,18 @@
+from __future__ import print_function
 import numpy as np
 import cv2
+import paho.mqtt.client as mqtt
+import base64
 
 cap = cv2.VideoCapture(1)
 face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 
-i = 0
-while(True):
-    i += 1
-    if not i % 60: print i
-    ret, frame = cap.read()
+client = mqtt.Client()
+client.connect('face_detector')
+
+i = 0 # frame index
+while(True): 
+    _, frame = cap.read()
 
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
 
@@ -25,11 +29,18 @@ while(True):
         faceimg = frame[ny:ny+nr, nx:nx+nr]
         lastimg = cv2.resize(faceimg, (256, 256))
         
-        cv2.imwrite("image.jpg", lastimg)
+        if i % 60 == 0:
+            print('Publishing frame {} to MQTT broker'.format(i))
+            cv2.imwrite('image.jpg', lastimg)
+            with open('image.jpg', 'rb') as f:
+                client.publish('detector_out',  base64.b64encode(f.read()))
 
     cv2.imshow('frame', gray)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
 
+    i += 1
+
 cap.release()
 cv2.destroyAllWindows()
+client.disconnect()

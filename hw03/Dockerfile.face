@@ -2,11 +2,22 @@ FROM w251/cuda:dev-tx2-4.2_b158
 
 ARG URL=http://169.44.201.108:7002/jetpacks/4.2
 
-RUN apt-get update && apt install -y git pkg-config wget build-essential cmake unzip python-pip vim
+RUN apt-get update && apt install -y \
+    git \
+    pkg-config \
+    wget \
+    build-essential \
+    cmake \
+    unzip \
+    python-pip \
+    vim \
+    inetutils-ping \
+    mosquitto \
+    mosquitto-clients
 
 WORKDIR /tmp
 
-RUN curl $URL/libopencv_3.3.1-2-g31ccdfe11_arm64.deb  -so libopencv_3.3.1-2-g31ccdfe11_arm64.deb
+RUN curl $URL/libopencv_3.3.1-2-g31ccdfe11_arm64.deb -so libopencv_3.3.1-2-g31ccdfe11_arm64.deb
 RUN curl $URL/libopencv-dev_3.3.1-2-g31ccdfe11_arm64.deb -so libopencv-dev_3.3.1-2-g31ccdfe11_arm64.deb
 RUN curl $URL/libopencv-python_3.3.1-2-g31ccdfe11_arm64.deb -so libopencv-python_3.3.1-2-g31ccdfe11_arm64.deb
 
@@ -18,7 +29,10 @@ RUN apt install -y libcanberra-gtk-module libcanberra-gtk3-module libgstreamer1.
 
 RUN python -m pip install --upgrade pip
 RUN pip install numpy
+RUN pip install paho-mqtt
 
 RUN rm -f /tmp/*.deb
 RUN mkdir /hw03
 WORKDIR /hw03
+
+CMD mosquitto -d

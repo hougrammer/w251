@@ -1,5 +1,14 @@
 FROM alpine:latest
-RUN apk update \
-    && apk add mosquitto \
-    && apk add mosquitto-clients
-RUN mosquitto -d
+RUN apk update && apk add \
+    mosquitto \
+    mosquitto-clients \
+    python \
+    py-pip \
+    vim
+
+RUN python -m pip install --upgrade pip
+RUN python -m pip install paho-mqtt
+
+RUN mkdir hw03
+WORKDIR /hw03
+CMD mosquitto -d
