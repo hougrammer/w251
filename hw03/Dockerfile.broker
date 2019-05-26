@@ -11,4 +11,4 @@ RUN python -m pip install paho-mqtt
 
 RUN mkdir hw03
 WORKDIR /hw03
-CMD mosquitto -d
+
