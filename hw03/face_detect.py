@@ -29,11 +29,10 @@ while(True):
         faceimg = frame[ny:ny+nr, nx:nx+nr]
         lastimg = cv2.resize(faceimg, (256, 256))
         
-        if i % 60 == 0:
-            print('Publishing frame {} to MQTT broker'.format(i))
-            cv2.imwrite('image.jpg', lastimg)
-            with open('image.jpg', 'rb') as f:
-                client.publish('detector_out',  base64.b64encode(f.read()))
+    if i % 60 == 0:
+        print('Publishing frame {} to MQTT broker'.format(i))
+        _, jpg = cv2.imencode('.jpg', lastimg)
+        client.publish('detector_out', jpg.tobytes())
 
     cv2.imshow('frame', gray)
     if cv2.waitKey(1) & 0xFF == ord('q'):
