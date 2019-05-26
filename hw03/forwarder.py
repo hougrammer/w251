@@ -1,15 +1,19 @@
 import paho.mqtt.client as mqtt
 
+i = [0]
 def on_message(client, userdata, message):
-    print('Publishing message...')
-    client.connect(169.53.138.75)
-    client.publish('forwarder_out', message.payload)
-    print('First 64 characters of message: {}'.format(message.payload[:64]))
-    client.connect('face_detector')
+    print('Publishing message ' + str(i[0]))
+    i[0] += 1
+    pub.publish('forwarder_out', message.payload)
+    
 
 
-client = mqtt.Client()
-client.connect('face_detector')
-client.subscribe('detector_out')
-client.on_message = on_message
-client.loop_forever()
+sub = mqtt.Client()
+sub.connect('face_detector')
+sub.subscribe('detector_out')
+
+pub = mqtt.Client()
+pub.connect('169.53.138.75')
+
+sub.on_message = on_message
+sub.loop_forever()
