@@ -1,20 +1,30 @@
 # Homework 3
 
-## Running Face Detector
+## Face Detector
+This runs on my TX2.
 ```
+docker build -t face_detector -f Dockerfile.face .
 docker run --name face_detector -e DISPLAY=$DISPLAY --rm --privileged -v /home/david/w251/hw03:/hw03 -v /tmp/.X11-unix:/tmp/.X11-unix --device /dev/video1 --network hw03 -it face_detector bash
+mosquitto -d
+python face_detect.py
 ```
 
-## Running MQTT Broker
+## MQTT Broker
+This also runs on my TX2.  I'm using QOS 0 for publishing messages because I don't really care if a few images of my face get dropped on the way to the internet.
 ```
-docker run --name broker --rm --network hw03 -it -v /home/david/w251/hw03:/hw03 mqtt_broker
+docker build -t mqtt_broker -f Dockerfile.broker .
+docker run --name broker --rm --network hw03 -it -v /home/david/w251/hw03:/hw03 mqtt_broker sh
 mosquitto -d
+python forwarder.py
 ```
-### Subscribing
+
+## Running Image Saver
+This runs on my VSI.
 ```
-mosquitto_sub -t hw03 -h <host>
+docker build -t cos_saver
+docker run --name saver --rm -v $HOME/w251/hw03:/hw03 -v $HOME/credentials:/credentials -it cos_saver sh
+mosquitto -d
+python image_process.py
 ```
-### Publishing
-```
-mosquitto_pub -t hw03 -m <message>
-```
+Get images from http://s3-api.us-geo.objectstorage.softlayer.net/davidhou-bucket/image#.
+The face detector sent 12 images but images 7-9 were dropped due to QOS.
