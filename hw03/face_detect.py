@@ -10,7 +10,7 @@ face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
 client = mqtt.Client()
 client.connect('face_detector')
 
-i = 0 # frame index
+i = 1 # frame index
 while(True): 
     _, frame = cap.read()
 

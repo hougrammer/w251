@@ -1,0 +1,14 @@
+FROM alpine:latest
+RUN apk update && apk add \
+    mosquitto \
+    mosquitto-clients \
+    python \
+    py-pip \
+    vim
+
+RUN python -m pip install --upgrade pip
+RUN python -m pip install paho-mqtt ibm-cos-sdk
+
+RUN mkdir hw03
+WORKDIR /hw03
+
