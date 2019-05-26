@@ -35,4 +35,3 @@ RUN rm -f /tmp/*.deb
 RUN mkdir /hw03
 WORKDIR /hw03
 
-CMD mosquitto -d
