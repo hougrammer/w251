@@ -2,8 +2,10 @@ import paho.mqtt.client as mqtt
 
 def on_message(client, userdata, message):
     print('Publishing message...')
-    client.publish('forwarder_out')
+    client.connect(169.53.138.75)
+    client.publish('forwarder_out', message.payload)
     print('First 64 characters of message: {}'.format(message.payload[:64]))
+    client.connect('face_detector')
 
 
 client = mqtt.Client()
