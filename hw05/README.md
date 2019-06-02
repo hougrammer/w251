@@ -12,6 +12,7 @@
 10. The model was pretty good.
 11. GPU vs CPU training time on MobileNet is actually fairly comparable.
 12. Inception takes way longer to train on CPU than on GPU.
-13. ```
+13. 
+```bash
 python3 -m scripts.label_image --input_layer="Mul" --input_height=299 --input_width=299  --graph=tf_files/retrained_graph.pb --image=tf_files/flower_photos/daisy/21652746_cc379e0eea_m.jpg
 ```
