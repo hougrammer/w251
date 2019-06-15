@@ -32,9 +32,10 @@ RUN pip3 install paho-mqtt
 
 # HW 07
 RUN apt install -y zlib1g-dev zip libjpeg8-dev libhdf5-dev
-RUN pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker grpcio six mock requests gast h5py astor termcolor
+RUN pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker grpcio six mock requests gast h5py astor termcolor Pillow
 
-RUN pip install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp33 tensorflow-gpu
+RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+
 RUN rm -f /tmp/*.deb
 WORKDIR /root
 
