@@ -8,6 +8,10 @@ RUN pip3 install -U numpy grpcio absl-py py-cpuinfo psutil portpicker grpcio six
 RUN pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
 RUN pip3 install Pillow
 ```
+Start container with
+```
+docker run --name face_detector -e DISPLAY=$DISPLAY --rm --privileged -v /home/david/w251/hw03:/hw03 -v /tmp/.X11-unix:/tmp/.X11-unix --device /dev/video1 --network hw03 -it face_detector bash
+```
 
 Run with
 ```
