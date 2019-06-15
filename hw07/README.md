@@ -17,3 +17,5 @@ Run with
 ```
 python3 inference_usbCam_face.py 1
 ```
+
+Images are located under `images/`.
