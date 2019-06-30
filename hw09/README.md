@@ -21,7 +21,11 @@
 ```
 ![learning_rate](images/learning_rate.png)
 7. The training data is 14GB.
+
 8. The meta file contains information about the graph.  The data file contains all the values of the variables.  The index file contains checkpoint indexing information.
+
 9. One checkpoint is about 828MB.
+
 10. A step takes a little less than 2 seconds.
+
 11. 
