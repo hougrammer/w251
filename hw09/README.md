@@ -1,13 +1,13 @@
 # Homework 9
 
 1. Training takes about 2 days per 100k steps on V100s.  Extrapolating out to 300k steps results in about 6 days.
-![global_step](images/global_step.png)
 
-2. The network is approaching convergence.  From Dima's Tensorboard, it looks like BLEU can get a little better.
+2. The network is approaching convergence.  From Dima's Tensorboard, it looks like BLEU can get a little bit above 0.38 but not by much.
 ![bleu](images/bleu.png)
 
-3. It does not look like the model is overfitting.
+3. It does not look like the model is overfitting.  Both eval and training loss are fairly level around 1.6.
 ![eval_loss](images/eval_loss.png)
+![train_loss](images/train_loss.png)
 
 4. GPUs are working at 100%.
 ![gpu_usage](images/gpu_usage.png)
@@ -32,6 +32,7 @@
 
 9. One checkpoint is about 828MB.
 
-10. A step takes a little less than 2 seconds.
+10. Global steps per second hovers just below 0.6.  That means a single step takes about 1.7 seconds.
+![global_step](images/global_step.png)
 
 11. Network utilization is not limiting the data available to the GPUs.
